@@ -20,6 +20,22 @@ app.use(bodyParser.json());
 const routes = require("./routes");
 app.use("/", routes);
 
-//server starts
+// Set socket.io
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`${PORT} port , start server`));
+
+//server starts
+server.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+})
+
+io.on('connection', (socket) => {
+    console.log(`${socket.id} is connected`);
+    io.to(socket.id).emit('connection_success', {socketId: socket.id, message: "입장"})
+
+    socket.on('send_chat', (data) => {
+        console.log(`${socket.id} : ${data.message}`);
+        io.emit('receive_chat', {socketId: socket.id, message: data.message});
+    })
+})
