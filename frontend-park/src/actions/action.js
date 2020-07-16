@@ -20,3 +20,10 @@ export const enterChat = (data) => {
         data
     }
 }
+
+export const connectionSuccess = (data) => {
+    return {
+        type: type.CONNECT_SUCCESS,
+        data
+    }
+}

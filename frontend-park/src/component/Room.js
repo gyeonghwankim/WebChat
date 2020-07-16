@@ -7,8 +7,12 @@ import ChatList from './ChatList';
 
 const socketSubscribe = (dispatch) => {
     socket.on('connection_success', (data) => {
-        dispatch(action.enterChat(data))
+        dispatch(action.connectionSuccess(data))
     });
+
+    socket.on('enter_chat', (data) => {
+        dispatch(action.enterChat(data));
+    })
 
     socket.on('receive_chat', (data) => {
         dispatch(action.receiveChat(data));

@@ -18,10 +18,11 @@ const chatReducer = (state = chatStates, action) => {
             newChatList.push(action.data);
             return { ...state, chatList: newChatList };
         case type.ENTER_CHAT:
-            console.log(action.data)
             newChatList = state.chatList.slice();
             newChatList.push(action.data);
             return { ...state, chatList: newChatList };
+        case type.CONNECT_SUCCESS:
+            return { ...state, socketId: action.data.socketId }
         default:
             return state;
     }
